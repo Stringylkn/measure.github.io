@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Kangning Liu" />
+  <title>路径积分测度: 一些杂谈</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">路径积分测度: 一些杂谈</h1>
+<p class="author">Kangning Liu</p>
+</header>
+<h1 id="hilbert空间上的测度">Hilbert空间上的测度</h1>
+<p>假设<span class="math inline">\(H\)</span>是<span
+class="math inline">\(n\)</span>维希尔伯特空间,
+那么其上一个测度可以用方体来定义, 即对任何正交基<span
+class="math inline">\(v_1,\cdots,v_n\)</span>,
+定义它们张出的方体的测度为<span
+class="math inline">\(\mu(v_1,\cdots,v_n)=\sqrt{|v_1|^2
+\cdots|v_n|^2}\)</span>, 其中<span class="math inline">\(|v_i|^2 =
+\braket{v_i,v_i}\)</span>. 如此, 任何一组向量<span
+class="math inline">\(w_1,\cdots,w_n\)</span>张成的斜方体的测度可以用Gram矩阵的行列式定义,
+即为<span class="math inline">\(\mu(w_1,\cdots,w_n)=\sqrt{\det
+(G_{ij})},~G_{ij}=\braket{w_i,w_j}\)</span>.
+内积诱导测度的好处在于有平移不变性.</p>
+<p>把这个构造推广到无限维, 通常可以构造出量子反常可以控制的路径积分测度.
+具体地说, 考虑黎曼流形上的实标量场论, 设度规是<span
+class="math inline">\(g_{\mu\nu}\)</span>, 那么为了定义路径积分测度,
+应该考虑内积 <span class="math display">\[(\phi_1, \phi_2) = \int d^nx
+\sqrt{g} \phi_1 \phi_2,\]</span> 于是对于此内积下的正交归一基<span
+class="math inline">\(\varphi_n\)</span>, 可以把场展开成级数 <span
+class="math display">\[\phi = \sum_n c_n \varphi_n,\]</span>
+那么路径积分测度可以清晰地定义为 <span
+class="math display">\[\mathcal{D}\phi = \sum_n d c_n .\]</span></p>
+<p>也可以不用取正交基, 内积的矩阵是 <span class="math display">\[G(x,y)
+= \sqrt{g} \delta(x-y),\]</span> 那么路径积分测度可以写为 <span
+class="math display">\[\mathcal{D} \phi = \sqrt{\det \left(\sqrt{g}
+\delta(x-y)\right)} \mathcal{D}_0 \phi,\]</span> 其中<span
+class="math inline">\(\mathcal{D}_0
+\phi\)</span>是度规为平直度规时的测度, <span
+class="math inline">\(\sqrt{g}\)</span>的时空坐标可以取为<span
+class="math inline">\(x\)</span>或<span
+class="math inline">\(y\)</span>.</p>
+<h1 id="黎曼流形上的测度">黎曼流形上的测度</h1>
+<p>场构型所张成的空间不一定适合定义为线性空间.
+最一般的情况应该把全体场构型视为流形, 而一个特定的场构型是其中的一个点,
+或者一个点的坐标.</p>
+<p>为此我们来回忆黎曼流形上的体积形式. 假设<span
+class="math inline">\(x^\mu\)</span>是一组坐标, <span
+class="math inline">\(g_{\mu\nu}\)</span>是这组坐标上的度规.
+通常的做法是把体积形式用坐标拉回到欧氏空间, 用单位分解拼出整块的体积.
+在一个具体的坐标卡中, 我们的体积形式是<span
+class="math inline">\(\sqrt{g}~d^nx\)</span>.</p>
+<p>推广到路径积分, 则需要考虑在场构型余切丛上工作. 考虑标量场论,
+在一个场构型<span class="math inline">\(\phi\)</span>的余切空间上,
+有内积 <span class="math display">\[( \delta \phi_1 ,  \delta \phi_2 ) =
+\int d^n x \sqrt{g} f(\phi) \delta \phi_1 \delta \phi_2,\]</span>
+路径积分测度应该是 <span class="math display">\[\mathcal{D} \phi =
+\sqrt{\det \left(\sqrt{g}f(\phi) \delta(x-y)\right)} \mathcal{D}_0
+\phi,\]</span> 其中<span
+class="math inline">\(\sqrt{g}f(\phi)\)</span>的时空坐标可以取为<span
+class="math inline">\(x\)</span>或<span
+class="math inline">\(y\)</span>.
+这样的测度最大的隐患在于不是平移不变的: <span
+class="math display">\[\mathcal{D} \phi \neq \mathcal{D}
+(\phi+\sigma).\]</span> 一种修补平移不变形的办法是把<span
+class="math inline">\(f(\phi)\)</span>提出来放到作用量里, 注意到 <span
+class="math display">\[\sqrt{g}f(\phi) \delta(x-y) = \int d^n z
+\sqrt{g(x)} \delta(x-z)f(\phi(z)) \delta(z-y)\]</span> 因此 <span
+class="math display">\[\det \left(\sqrt{g}f(\phi) \delta(x-y)\right) =
+\det \left( \sqrt{g(x)} \delta(x-z)\right) \det \left( f(\phi(z))
+\delta(z-y) \right),\]</span> 于是有 <span
+class="math display">\[\mathcal{D} \phi = \sqrt{\det \left( \sqrt{g(x)}
+\delta(x-z)\right)} \mathcal{D}_0 \phi \sqrt{\det \left( f(\phi(z))
+\delta(z-y) \right)} .\]</span></p>
+<h1 id="热核正规化">热核正规化</h1>
+<p>把积分视为求和, 把<span
+class="math inline">\(\delta(x-y)\)</span>视为单位矩阵的语言很容易遇到发散,
+其中最常见的就是单位矩阵的迹. 矩阵<span
+class="math inline">\(G(x,y)\)</span>的迹应该定义为 <span
+class="math display">\[\int d^n x \int d^n y~ \delta(x-y) G(x,y) =
+\operatorname{tr}  G(x,y) ,\]</span> 于是单位矩阵的迹为 <span
+class="math display">\[\operatorname{tr} \delta(x-y) = \int d^n x
+~\delta(0) .\]</span> 为了正规化,
+在平直时空一般考虑把单位矩阵磨光成高斯分布, 比如二维可以取 <span
+class="math display">\[K(x, y ,\tau) = \frac{1}{\sqrt{4\pi \tau}} \exp
+\left[ - \frac{(x-y)^2}{4\tau} \right],\quad \tau&gt;0.\]</span>
+如此便有 <span class="math display">\[\begin{aligned}
+        &amp;\int d^2x~ K(x, y ,\tau) = 1,\\
+        &amp;   K(x, y ,0) = \delta(x-y).
+\end{aligned}\]</span> <span class="math inline">\(K(x, y
+,\tau)\)</span>称为热核. 在一般的黎曼流形上,
+热核的构造可以取为如下方程的解 <span
+class="math display">\[\begin{aligned}
+        \frac{\partial}{\partial t} K(x,y,\tau) &amp;= \Delta_x
+K(x,y,\tau),\quad \tau &gt; 0 \\
+         K(x, y ,0) &amp;= \delta(x-y).
+\end{aligned}\]</span> 可以验证, 在<span
+class="math inline">\(2w\)</span>维时空上, 热核在短时极限下有如下特性
+<span class="math display">\[K(x, x, \epsilon ) \sim \frac{ \sqrt{g}
+}{(4\pi \epsilon)^{w}} \left( 1 + \frac{\epsilon R}{6} + \epsilon^2
+\left(\frac{R^2}{120} + \frac{R_{\mu\nu}R^{\mu\nu}}{60} \right) +
+\cdots\right)\]</span> 如此一来,
+可以在作用量中引入宇宙学常数等抵消项来消除发散. 特别地, 对于二维, 我们有
+<span class="math display">\[K(x, x, \epsilon ) \sim
+\frac{\sqrt{g}}{4\pi \epsilon} + \frac{\sqrt{g}R}{24\pi
+\epsilon}.\]</span></p>
+<h1 id="栗子">栗子</h1>
+<p>考虑二维标量场, 取内积为 <span class="math display">\[( \delta \phi_1
+,  \delta \phi_2 ) = \int d^2 x \sqrt{g} e^{2f(\phi)} \delta \phi_1
+\delta \phi_2,\]</span> 我们来分析这个内积带来的量子效应.
+首先考虑做出平移不变的积分测度, 有 <span
+class="math display">\[\begin{aligned}
+        \ln \sqrt{\det \left( e^{2f(\phi)} \delta(z-y) \right)} &amp;=
+\frac{1}{2} \operatorname{tr} \ln \left(  e^{2f(\phi)}
+\delta(z-y)\right) \\
+        &amp; = \int d^2 z ~ f(\phi(z)) \delta(0).
+\end{aligned}\]</span> 因此有 <span
+class="math display">\[\begin{aligned}
+        \sqrt{\det \left( e^{2f(\phi)} \delta(z-y) \right)} = \exp
+\left\{  \int d^2 z ~ f(\phi(z)) \delta(0) \right\}.
+\end{aligned}\]</span> 这里有一个需要注意的问题, 即<span
+class="math inline">\(K(x, x, \epsilon )\)</span>是否含<span
+class="math inline">\(\phi\)</span>. 如果<span
+class="math inline">\(\phi\)</span>是度规对某个标准度规的偏离<span
+class="math inline">\(g_{\mu\nu} = e^{2\phi} h_{\mu\nu}\)</span>,
+那么热核正规化是依赖于<span class="math inline">\(\phi\)</span>的,
+这时不同<span class="math inline">\(\phi\)</span>构型的<span
+class="math inline">\(\delta(0)\)</span>并不相等, 应该考虑积分 <span
+class="math display">\[\begin{aligned}
+        &amp;\int_{\delta \phi} \delta \ln \sqrt{\det \left(
+e^{2f(\phi)} \delta(z-y) \right)}  = \int_{\delta \phi} \int d^2 z ~
+f&#39;(\phi(z))  \delta(0) \delta \phi \\
+        \sim &amp; \int_{\delta \phi} \int d^2 z ~
+f&#39;(\phi(z))  K_\phi(x,x,\epsilon) \delta \phi.
+\end{aligned}\]</span>
+进一步计算可以做出类似Liouville理论的有效作用量.</p>
+<p>另外, 内积为 <span class="math display">\[( \delta \phi_1 ,  \delta
+\phi_2 ) = \int d^2 x \sqrt{g} \delta \phi_1 \delta \phi_2\]</span>
+会导致外尔反常, 做法也是类似的.</p>
+</body>
+</html>
